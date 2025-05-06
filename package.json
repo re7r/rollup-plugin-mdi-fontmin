@@ -1,0 +1,78 @@
+{
+  "name": "rollup-plugin-mdi-fontmin",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "Rollup plugin for subsetting Material Design Icons (MDI) font files",
+  "repository": "https://github.com/re7r/rollup-plugin-mdi-fontmin",
+  "author": "re7r <re7r@proton.me>",
+  "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
+  "types": "types/index.d.ts",
+  "exports": {
+    "types": "./types/index.d.ts",
+    "import": "./dist/es/index.min.js",
+    "require": "./dist/cjs/index.min.js"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "ci:coverage": "nyc yarn test && nyc report --reporter=text-lcov > coverage.lcov",
+    "ci:lint": "yarn build && yarn lint",
+    "ci:lint:commits": "commitlint --from=${CIRCLE_BRANCH} --to=${CIRCLE_SHA1}",
+    "ci:test": "yarn test --verbose && yarn test:ts",
+    "prebuild": "del-cli dist",
+    "prepare": "if [ ! -d 'dist' ]; then yarn build; fi",
+    "prerelease": "yarn build",
+    "pretest": "yarn build",
+    "release": "release-it",
+    "test": "ava",
+    "test:ts": "tsc types/index.d.ts test/types.ts --noEmit"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "peerDependencies": {
+    "@mdi/font": "*",
+    "fontmin": "^1.0.0||^2.0.0",
+    "rollup": "*"
+  },
+  "peerDependenciesMeta": {
+    "rollup": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@mdi/font": "^7.4.47",
+    "@release-it/bumper": "^7.0.5",
+    "@release-it/conventional-changelog": "^10.0.1",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "@types/node": "^22.15.14",
+    "ava": "^6.3.0",
+    "fontmin": "^2.0.0",
+    "release-it": "^19.0.2",
+    "rollup": "^4.40.2",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.8.1",
+    "typescript": "^5.8.3"
+  },
+  "files": [
+    "dist",
+    "!dist/**/*.map",
+    "src",
+    "types",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "rollup",
+    "plugin",
+    "mdi",
+    "fontmin",
+    "minify",
+    "icons"
+  ],
+  "dependencies": {}
+}
