@@ -2,28 +2,26 @@
   "name": "rollup-plugin-mdi-fontmin",
   "version": "1.0.0",
   "license": "MIT",
+  "author": "re7r <re7r@proton.me>",
   "description": "Rollup plugin for subsetting Material Design Icons (MDI) font files",
   "repository": "https://github.com/re7r/rollup-plugin-mdi-fontmin",
-  "author": "re7r <re7r@proton.me>",
-  "main": "dist/cjs/index.js",
-  "module": "dist/es/index.js",
+  "main": "dist/index.min.js",
+  "module": "dist/index.min.js",
   "types": "types/index.d.ts",
   "exports": {
-    "types": "./types/index.d.ts",
-    "import": "./dist/es/index.min.js",
-    "require": "./dist/cjs/index.min.js"
+    "require": "./dist/index.min.js",
+    "import": "./dist/index.min.js",
+    "types": "./types/index.d.ts"
   },
   "scripts": {
-    "build": "rollup -c",
-    "ci:coverage": "nyc yarn test && nyc report --reporter=text-lcov > coverage.lcov",
-    "ci:lint": "yarn build && yarn lint",
-    "ci:lint:commits": "commitlint --from=${CIRCLE_BRANCH} --to=${CIRCLE_SHA1}",
+    "build": "rollup -c --configPlugin @rollup/plugin-typescript",
     "ci:test": "yarn test --verbose && yarn test:ts",
+    "ci:coverage": "nyc yarn test && nyc report --reporter=text-lcov > coverage.lcov",
+    "ci:release": "release-it --no-increment",
     "prebuild": "del-cli dist",
     "prepare": "if [ ! -d 'dist' ]; then yarn build; fi",
     "prerelease": "yarn build",
     "pretest": "yarn build",
-    "release": "release-it",
     "test": "ava",
     "test:ts": "tsc types/index.d.ts test/types.ts --noEmit"
   },
@@ -31,12 +29,12 @@
     "access": "public"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=14.16.1"
   },
   "peerDependencies": {
-    "@mdi/font": "*",
     "fontmin": "^1.0.0||^2.0.0",
-    "rollup": "*"
+    "rollup": "^1.0.0||^2.0.0||^3.0.0||^4.0.0",
+    "@mdi/font": "^1.0.0||^2.0.0||^3.0.0||^4.0.0||^5.0.0||^6.0.0||^7.0.0"
   },
   "peerDependenciesMeta": {
     "rollup": {
@@ -59,12 +57,9 @@
     "typescript": "^5.8.3"
   },
   "files": [
-    "dist",
-    "!dist/**/*.map",
-    "src",
-    "types",
-    "README.md",
-    "LICENSE"
+    "dist/index.min.js",
+    "dist/index.min.mjs",
+    "types"
   ],
   "keywords": [
     "rollup",
@@ -72,7 +67,7 @@
     "mdi",
     "fontmin",
     "minify",
+    "font",
     "icons"
-  ],
-  "dependencies": {}
+  ]
 }

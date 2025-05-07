@@ -4,7 +4,7 @@ import test from 'ava';
 import path from 'path';
 import fs from 'fs';
 
-import mdiFontmin from '../dist/es/index.min.js';
+import mdiFontmin from '../dist/index.min.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const outputDir = path.resolve(__dirname, 'mdi');

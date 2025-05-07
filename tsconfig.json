@@ -16,10 +16,10 @@
     "noUnusedParameters": true,
     "pretty": true,
     "resolveJsonModule": true,
-    "sourceMap": true,
     "strict": true
   },
   "include": [
+    "rollup.config.ts",
     "src/**/*",
     "types/**/*"
   ],

@@ -1,4 +1,3 @@
-
 [npm]: https://img.shields.io/npm/v/rollup-plugin-mdi-fontmin
 [npm-url]: https://www.npmjs.com/package/rollup-plugin-mdi-fontmin
 [size]: https://packagephobia.now.sh/badge?p=rollup-plugin-mdi-fontmin
@@ -13,7 +12,7 @@
 
 ## Requirements
 
-This plugin requires an [LTS](https://github.com/nodejs/Release) Node version (v14.0.0+).
+This plugin requires Node.js v14.16.1+ ([LTS](https://github.com/nodejs/Release) recommended).
 
 ## Install
 
@@ -21,11 +20,7 @@ This plugin requires an [LTS](https://github.com/nodejs/Release) Node version (v
 npm install rollup-plugin-mdi-fontmin @mdi/font fontmin --save-dev
 ```
 
-### Notice
-
-**fontmin v2.x only supports ES Modules.**
-
-If you need to use CommonJS version, please install `fontmin v1.x`:
+If you want to use fontmin `1.x.x version`
 
 ```sh
 npm install rollup-plugin-mdi-fontmin @mdi/font fontmin@1 --save-dev
@@ -46,12 +41,22 @@ export default {
   plugins: [
     mdiFontmin({
       names: ['home', 'account', 'settings'], // List of icons to include (required)
-      output: 'public/fonts/mdi', // Output directory
-      silent: false, // Whether to suppress console output
-      logPrefix: '[mdi]', // Custom log prefix
     }),
   ],
 };
+```
+
+Full configuration example:
+
+```js
+plugins: [
+  mdiFontmin({
+    names: ['home', 'account', 'settings'], // List of icons to include (required)
+    output: 'public/fonts/mdi',             // Output directory
+    silent: false,                          // Whether to suppress console output
+    logPrefix: '[mdi]',                     // Custom log prefix
+  }),
+],
 ```
 
 Then call `rollup` either via the [CLI](https://www.rollupjs.org/guide/en/#command-line-reference) or the [API](https://www.rollupjs.org/guide/en/#javascript-api).
@@ -63,7 +68,8 @@ Then call `rollup` either via the [CLI](https://www.rollupjs.org/guide/en/#comma
 Type: `Array<string>`  
 **Required**: Yes
 
-A list of Material Design Icons (MDI) names to include in the subset.
+A list of Material Design Icons (MDI) names to include in the subset.  
+These correspond to *css* class names without the `mdi-` prefix.
 
 ### `output`
 

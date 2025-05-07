@@ -1,8 +1,7 @@
-import {checkSourcesExists, makeGlyphs, modifyCss, parseCss} from './internal';
-import {Plugin} from 'rollup';
-import Fontmin from 'fontmin';
-import path from 'path';
-import fs from 'fs';
+// noinspection ExceptionCaughtLocallyJS
+
+import {makeGlyphs, modifyCss, parseCss} from './internal';
+import {type Plugin} from 'rollup';
 
 export interface RollupMdiFontminOptions {
   names: string[];
@@ -15,11 +14,11 @@ export interface RollupMdiFontminOptions {
 /**
  * A Rollup plugin for subsetting Material Design Icons (MDI) font files.
  *
- * @param {Object} [options] - Plugin options.
- * @param {string[]} options.names - List of MDI icon names to include in the subset.
- * @param {string} [options.output] - The output directory for the subsetted font files. Defaults to 'public/fonts/mdi' if not provided.
- * @param {boolean} [options.silent] - Whether to suppress console output. Defaults to false.
- * @param {string} [options.logPrefix] - Prefix for console output. Defaults to '[rollup-plugin-mdi-fontmin]'.
+ * @param [options] - Plugin options.
+ * @param options.names - List of MDI icon names to include in the subset.
+ * @param [options.output] - The output directory for the subsetted font files. Defaults to 'public/fonts/mdi' if not provided.
+ * @param [options.silent] - Whether to suppress console output. Defaults to false.
+ * @param [options.logPrefix] - Prefix for console output. Defaults to '[rollup-plugin-mdi-fontmin]'.
  * @returns Plugin instance.
  */
 export default function mdiFontmin(options: RollupMdiFontminOptions): Plugin {
@@ -27,16 +26,17 @@ export default function mdiFontmin(options: RollupMdiFontminOptions): Plugin {
     name: 'rollup-plugin-mdi-fontmin',
 
     async buildStart() {
-      options = {
-        ...{
-          names: [],
-          output: 'public/fonts/mdi',
-          silent: false,
-          logPrefix: '[rollup-plugin-mdi-fontmin]',
-        } as RollupMdiFontminOptions, ...options ?? {},
-      };
+      options = Object.assign({
+        names: [],
+        output: 'public/fonts/mdi',
+        silent: false,
+        logPrefix: '[rollup-plugin-mdi-fontmin]',
+      }, options ?? {});
 
       const mdi = 'materialdesignicons';
+      const fs = (await import('fs')).default;
+      const path = (await import('path')).default;
+      const Fontmin = (await import('fontmin')).default;
       const logPrefix = options.logPrefix ? ` ${options.logPrefix}` : '';
       const ttfFile = path.resolve(`node_modules/@mdi/font/fonts/${mdi}-webfont.ttf`);
       const cssFile = path.resolve(`node_modules/@mdi/font/css/${mdi}.min.css`);
@@ -44,7 +44,19 @@ export default function mdiFontmin(options: RollupMdiFontminOptions): Plugin {
       const outputDir = path.resolve(outputPath);
 
       try {
-        checkSourcesExists(ttfFile, cssFile);
+        if (!fs.existsSync(ttfFile)) {
+          throw new Error(
+            `font file ${ttfFile} does not exist,\n` +
+            `check if the @mdi/font package is properly installed.`,
+          );
+        }
+
+        if (!fs.existsSync(cssFile)) {
+          throw new Error(
+            `css file ${ttfFile} does not exist,\n` +
+            `check if the @mdi/font package is properly installed.`,
+          );
+        }
 
         if (
           fs.existsSync(path.join(outputDir, `${mdi}.min.css`)) &&

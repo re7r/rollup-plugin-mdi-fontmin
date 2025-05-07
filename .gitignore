@@ -1,13 +1,9 @@
-.nyc_output/
 coverage/
 node_modules/
-output/
+.nyc_output/
+.vscode/
+.idea/
 
 .DS_Store
-.eslintcache
-coverage.lcov
-.pnpm-debug.log
-.idea
 .rollup.cache
-
-!/test/**/node_modules
+coverage.lcov
