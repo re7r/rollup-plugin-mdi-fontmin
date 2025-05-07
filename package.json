@@ -17,7 +17,7 @@
     "build": "rollup -c --configPlugin @rollup/plugin-typescript",
     "ci:test": "yarn test --verbose && yarn test:ts",
     "ci:coverage": "nyc yarn test && nyc report --reporter=text-lcov > coverage.lcov",
-    "ci:release": "release-it --no-increment",
+    "ci:release": "release-it",
     "prebuild": "del-cli dist",
     "prepare": "if [ ! -d 'dist' ]; then yarn build; fi",
     "prerelease": "yarn build",
@@ -58,8 +58,8 @@
   },
   "files": [
     "dist/index.min.js",
-    "dist/index.min.mjs",
-    "types"
+    "types/index.d.ts",
+    "package.json"
   ],
   "keywords": [
     "rollup",
