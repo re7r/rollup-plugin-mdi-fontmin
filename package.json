@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-mdi-fontmin",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "license": "MIT",
   "author": "re7r <re7r@proton.me>",
   "description": "Rollup plugin for subsetting Material Design Icons (MDI) font files",
