@@ -64,9 +64,11 @@
   "keywords": [
     "node",
     "rollup",
-    "rollup-plugon",
+    "rollup-plugin",
+    "material-design-icons",
     "mdi",
     "fontmin",
+    "compress",
     "minify",
     "font",
     "icons"
