@@ -62,8 +62,9 @@
     "package.json"
   ],
   "keywords": [
+    "node",
     "rollup",
-    "plugin",
+    "rollup-plugon",
     "mdi",
     "fontmin",
     "minify",
