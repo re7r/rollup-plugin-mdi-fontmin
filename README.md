@@ -34,11 +34,9 @@ Create a `rollup.config.js` [configuration file](https://www.rollupjs.org/guide/
 import mdiFontmin from 'rollup-plugin-mdi-fontmin';
 
 export default {
-  input: 'src/index.js',
-  output: {
-    file: 'output/bundle.js',
-  },
+  // ...
   plugins: [
+    // ...
     mdiFontmin({
       names: ['home', 'account', 'settings'], // List of icons to include (required)
     }),
@@ -49,17 +47,24 @@ export default {
 Full configuration example:
 
 ```js
-plugins: [
-  mdiFontmin({
-    names: ['home', 'account', 'settings'], // List of icons to include (required)
-    output: 'public/fonts/mdi',             // Output directory
-    silent: false,                          // Whether to suppress console output
-    logPrefix: '[mdi]',                     // Custom log prefix
-  }),
-],
+import mdiFontmin from 'rollup-plugin-mdi-fontmin';
+
+export default {
+  // ...
+  plugins: [
+    // ...
+    mdiFontmin({
+      names: ['home', 'account', 'settings'], // List of icons to include (required)
+      output: 'public/fonts/mdi', // Output directory
+      silent: false, // Whether to suppress console output
+      logPrefix: '[mdi]', // Custom log prefix
+    }),
+  ],
+};
 ```
 
-Then call `rollup` either via the [CLI](https://www.rollupjs.org/guide/en/#command-line-reference) or the [API](https://www.rollupjs.org/guide/en/#javascript-api).
+Then call `rollup` either via the [CLI](https://www.rollupjs.org/guide/en/#command-line-reference) or
+the [API](https://www.rollupjs.org/guide/en/#javascript-api).
 
 ## Options
 
@@ -69,7 +74,7 @@ Type: `Array<string>`
 **Required**: Yes
 
 A list of Material Design Icons (MDI) names to include in the subset.  
-These correspond to *css* class names without the `mdi-` prefix.
+These correspond to _css_ class names without the `mdi-` prefix.
 
 ### `output`
 
@@ -94,7 +99,8 @@ Prefix for console output.
 
 ## How it works
 
-The plugin will check if the font files already exist in the output directory. If they do, it will skip the generation step. Otherwise, it will:
+The plugin will check if the font files already exist in the output directory. If they do, it will skip the generation step. Otherwise, it
+will:
 
 1. Read the Material Design Icons CSS file.
 2. Parse and extract the glyphs corresponding to the specified icon names.

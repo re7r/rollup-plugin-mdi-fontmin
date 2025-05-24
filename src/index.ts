@@ -1,13 +1,30 @@
-// noinspection ExceptionCaughtLocallyJS
+// noinspection ExceptionCaughtLocallyJS,JSUnusedGlobalSymbols
 
-import {makeGlyphs, modifyCss, parseCss} from './internal';
-import {type Plugin} from 'rollup';
+import { makeGlyphs, modifyCss, parseCss } from './internal';
+import type { Plugin } from 'rollup';
 
 export interface RollupMdiFontminOptions {
+  /**
+   * List of MDI icon names to include in the subset.
+   */
   names: string[];
+
+  /**
+   * The output directory for the subsetted font files.
+   * Defaults to 'public/fonts/mdi' if not provided.
+   */
   output?: string;
-  input?: string;
+
+  /**
+   * Whether to suppress console output.
+   * Defaults to false.
+   */
   silent?: boolean;
+
+  /**
+   * Prefix for console output.
+   * Defaults to '[rollup-plugin-mdi-fontmin]'.
+   */
   logPrefix?: string;
 }
 
@@ -15,27 +32,26 @@ export interface RollupMdiFontminOptions {
  * A Rollup plugin for subsetting Material Design Icons (MDI) font files.
  *
  * @param [options] - Plugin options.
- * @param options.names - List of MDI icon names to include in the subset.
- * @param [options.output] - The output directory for the subsetted font files. Defaults to 'public/fonts/mdi' if not provided.
- * @param [options.silent] - Whether to suppress console output. Defaults to false.
- * @param [options.logPrefix] - Prefix for console output. Defaults to '[rollup-plugin-mdi-fontmin]'.
  * @returns Plugin instance.
  */
-export default function mdiFontmin(options: RollupMdiFontminOptions): Plugin {
+export default function mdiFontmin(options?: RollupMdiFontminOptions): Plugin {
   return {
-    name: 'rollup-plugin-mdi-fontmin',
+    name: 'mdi-fontmin',
 
     async buildStart() {
-      options = Object.assign({
-        names: [],
-        output: 'public/fonts/mdi',
-        silent: false,
-        logPrefix: '[rollup-plugin-mdi-fontmin]',
-      }, options ?? {});
+      options = Object.assign(
+        {
+          names: [],
+          output: 'public/fonts/mdi',
+          silent: false,
+          logPrefix: '[mdi-fontmin]',
+        },
+        options ?? {},
+      );
 
       const mdi = 'materialdesignicons';
-      const fs = (await import('fs')).default;
-      const path = (await import('path')).default;
+      const fs = (await import('node:fs')).default;
+      const path = (await import('node:path')).default;
       const Fontmin = (await import('fontmin')).default;
       const logPrefix = options.logPrefix ? ` ${options.logPrefix}` : '';
       const ttfFile = path.resolve(`node_modules/@mdi/font/fonts/${mdi}-webfont.ttf`);
@@ -46,15 +62,13 @@ export default function mdiFontmin(options: RollupMdiFontminOptions): Plugin {
       try {
         if (!fs.existsSync(ttfFile)) {
           throw new Error(
-            `font file ${ttfFile} does not exist,\n` +
-            `check if the @mdi/font package is properly installed.`,
+            `font file ${ttfFile} does not exist,\n` + `check if the @mdi/font package is properly installed.`,
           );
         }
 
         if (!fs.existsSync(cssFile)) {
           throw new Error(
-            `css file ${ttfFile} does not exist,\n` +
-            `check if the @mdi/font package is properly installed.`,
+            `css file ${ttfFile} does not exist,\n` + `check if the @mdi/font package is properly installed.`,
           );
         }
 
@@ -66,18 +80,18 @@ export default function mdiFontmin(options: RollupMdiFontminOptions): Plugin {
           fs.existsSync(path.join(outputDir, `${mdi}-webfont.woff2`))
         ) {
           if (!options.silent) {
-            console.log(`✅${logPrefix} Font files already exist, skipping generation.`);
+            console.info(`✅${logPrefix} Font files already exist, skipping generation.`);
           }
 
           return;
         }
 
         if (!options.silent) {
-          console.log(`✅${logPrefix} Starting Subset mdi fonts generation...`);
+          console.info(`✅${logPrefix} Starting Subset mdi fonts generation...`);
         }
 
         if (!fs.existsSync(outputDir)) {
-          fs.mkdirSync(outputDir, {recursive: true});
+          fs.mkdirSync(outputDir, { recursive: true });
         }
 
         const css = fs.readFileSync(cssFile, 'utf8');
@@ -87,7 +101,7 @@ export default function mdiFontmin(options: RollupMdiFontminOptions): Plugin {
         await new Fontmin()
           .src(ttfFile)
           .dest(outputDir)
-          .use(Fontmin.glyph({text: glyphs, hinting: true}))
+          .use(Fontmin.glyph({ text: glyphs, hinting: true }))
           .use(Fontmin.ttf2eot())
           .use(Fontmin.ttf2woff())
           .use(Fontmin.ttf2woff2())
@@ -98,13 +112,13 @@ export default function mdiFontmin(options: RollupMdiFontminOptions): Plugin {
           fs.writeFileSync(path.join(outputDir, `${mdi}.min.css`), processedCSS);
 
           if (!options.silent) {
-            console.log(`✅${logPrefix} Subset mdi fonts generated at ` + outputPath);
+            console.info(`✅${logPrefix} Subset mdi fonts generated at ${outputPath}`);
           }
-        } catch (err) {
-          console.error(`❌${logPrefix} Subset mdi .css generation failed:`, err);
+        } catch (error) {
+          console.error(`❌${logPrefix} Subset mdi .css generation failed:`, error);
         }
-      } catch (err) {
-        console.error(`❌${logPrefix} Subset mdi fonts generation failed:`, err);
+      } catch (error) {
+        console.error(`❌${logPrefix} Subset mdi fonts generation failed:`, error);
       }
     },
   };
