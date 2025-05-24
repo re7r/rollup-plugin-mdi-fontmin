@@ -23,7 +23,7 @@ export interface RollupMdiFontminOptions {
 
   /**
    * Prefix for console output.
-   * Defaults to '[rollup-plugin-mdi-fontmin]'.
+   * Defaults to '[mdi-fontmin]'.
    */
   logPrefix?: string;
 }

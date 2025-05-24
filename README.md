@@ -93,7 +93,7 @@ Whether to suppress console output.
 ### `logPrefix`
 
 Type: `string`  
-Default: `'[rollup-plugin-mdi-fontmin]'`
+Default: `'[mdi-fontmin]'`
 
 Prefix for console output.
 
