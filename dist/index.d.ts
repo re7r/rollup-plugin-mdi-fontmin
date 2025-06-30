@@ -27,4 +27,5 @@ interface RollupMdiFontminOptions {
  * @param [options] - Plugin options.
  * @returns Plugin instance.
  */
-declare function mdiFontmin(options?: RollupMdiFontminOptions): Plugin; export { RollupMdiFontminOptions, mdiFontmin as default };
+declare function mdiFontmin(options?: RollupMdiFontminOptions): Plugin;
+export { RollupMdiFontminOptions, mdiFontmin as default };
