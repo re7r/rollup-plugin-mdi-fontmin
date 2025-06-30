@@ -59,17 +59,17 @@
     "@mdi/font": "^7.4.47",
     "@release-it/bumper": "^7.0.5",
     "@release-it/conventional-changelog": "^10.0.1",
-    "@sxzz/eslint-config": "^7.0.1",
-    "@sxzz/prettier-config": "^2.2.1",
-    "@types/node": "^22.15.21",
-    "eslint": "^9.27.0",
-    "eslint-plugin-jsdoc": "^50.6.17",
+    "@sxzz/eslint-config": "^7.0.4",
+    "@sxzz/prettier-config": "^2.2.3",
+    "@types/node": "^24.0.7",
+    "eslint": "^9.30.0",
+    "eslint-plugin-jsdoc": "^51.3.1",
     "fontmin": "^2.0.0",
-    "prettier": "^3.5.3",
-    "release-it": "^19.0.2",
-    "rollup": "^4.41.1",
-    "tsdown": "^0.12.3",
-    "vitest": "^3.1.4"
+    "prettier": "^3.6.2",
+    "release-it": "^19.0.3",
+    "rollup": "^4.44.1",
+    "tsdown": "^0.12.9",
+    "vitest": "^3.2.4"
   },
   "engines": {
     "node": ">=v18"
